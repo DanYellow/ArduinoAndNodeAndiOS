@@ -13,6 +13,7 @@ The node server create a random value between 0000 and 9999 (there are included)
 - npm install : install all the node dependencies
 - plug your Arduino to your PC and configure in the Arduino IDE
 - Upload in your microcontroller the StandardFirmata Example (it's in the IDE)
+- Do the electronical scheme
 - run node server.js in your terminal
 - Go to the URL localhost:1280/XXXX
 - And try to find the number
@@ -20,3 +21,9 @@ The node server create a random value between 0000 and 9999 (there are included)
 ### Todo
 - Create an URL to restart the game
 - Use Processing ?
+
+
+#### Electronical scheme
+- 4 LED
+- 4 Resitors (~ 220 ohm)
+- An Arduino microcontroller
