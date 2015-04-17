@@ -34,6 +34,11 @@ function shutDownLEDs() {
   for (var i = arrayLeds.length - 1; i >= 0; i--) {
     arduino.digitalWrite(arrayLeds[i], false);
   };
+
+  arduino.digitalWrite(10, false);
+  arduino.digitalWrite(11, false);
+  arduino.digitalWrite(12, false);
+  arduino.digitalWrite(13, false);
 }
 
 /**
@@ -70,36 +75,48 @@ function startGame(enteredNumber) {
   if (enteredNumber[0] == valueToGuessArray[0]) {
    delArray.push({"del": true});
    arduino.digitalWrite(2, true);
+   arduino.digitalWrite(10, true);
   } else {
    arduino.digitalWrite(2, false);
+   arduino.digitalWrite(10, false);
    delArray.push({"del": false});
    win = false;
   }
 
   if (enteredNumber[1] == valueToGuessArray[1]) {
    arduino.digitalWrite(3, true);
+   arduino.digitalWrite(11, true);
    delArray.push({"del": true});
   } else {
    arduino.digitalWrite(3, false);
    delArray.push({"del": false});
+   arduino.digitalWrite(11, false);
    win = false;
   }
 
   if (enteredNumber[2] == valueToGuessArray[2]) {
    arduino.digitalWrite(4, true);
    delArray.push({"del": true});
+
+   arduino.digitalWrite(12, true);
   } else {
    arduino.digitalWrite(4, false);
    delArray.push({"del": false});
+
+   arduino.digitalWrite(12, false);
    win = false;
   }
 
   if (enteredNumber[3] == valueToGuessArray[3]) {
    arduino.digitalWrite(5, true);
    delArray.push({"del": true});
+
+   arduino.digitalWrite(13, true);
   } else {
    arduino.digitalWrite(5, false);
    delArray.push({"del": false});
+
+   arduino.digitalWrite(13, false);
    win = false;
   }
 
@@ -108,7 +125,7 @@ function startGame(enteredNumber) {
     valueToGuessArray = generateRandomVal();
     setTimeout(function() {
       shutDownLEDs();
-    }, 500);
+    }, 1500);
     
 
   } else {
