@@ -3,11 +3,22 @@ var app = express();
 var ArduinoFirmata = require('arduino-firmata');
 
 
+// Connect node server to Arduino
 var arduino = new ArduinoFirmata();
-arduino.connect('/dev/cu.usbmodem1421');
+arduino.connect('/dev/cu.usbmodem1411');
  
 arduino.on('connect', function(){
   console.log('board version' + arduino.boardVersion);
+
+  // Set to false all ports of Arduino Microcontroller
+  arduino.digitalWrite(2, false);
+  arduino.digitalWrite(3, false);
+  arduino.digitalWrite(4, false);
+  arduino.digitalWrite(5, false);
+  arduino.digitalWrite(10, false);
+  arduino.digitalWrite(11, false);
+  arduino.digitalWrite(12, false);
+  arduino.digitalWrite(13, false);
 });
 
 // Var who contain the value to guess
@@ -15,7 +26,7 @@ var valueToGuessArray = null;
 
 app.get('/', function(req, res) {
 	// Every code needs to print "Hello world"
-    res.send('Hello World!');
+  res.send('Hello World!');
 }).get('/:param', function(req, res){
     var playerAnswer = req.param('param').split('');
     res.send(startGame(playerAnswer));
@@ -35,6 +46,10 @@ function shutDownLEDs() {
     arduino.digitalWrite(arrayLeds[i], false);
   };
 
+   arduino.digitalWrite(2, false);
+   arduino.digitalWrite(3, false);
+   arduino.digitalWrite(4, false);
+   arduino.digitalWrite(5, false);
   arduino.digitalWrite(10, false);
   arduino.digitalWrite(11, false);
   arduino.digitalWrite(12, false);
@@ -64,9 +79,9 @@ function generateRandomVal() {
 /**
 * @function
 * @name startGame
-* @desc Ring the piezo buzzer
+* @desc Check the value received
 *
-* @return array of results DELs
+* @return array of json contains the results of DELs
 */
 
 function startGame(enteredNumber) {
@@ -142,22 +157,6 @@ function startGame(enteredNumber) {
 */
 
 function tone(isUserWin) {
-  // for (var i = 0; i < 90; i++) {
-  //   var an = Math.floor(Math.random()*1023);
-  //   arduino.analogWrite(9, an, null);
-  //   setTimeout(function() {
-  //       arduino.analogWrite(9, 0, null);
-  //     }, 200);
-  // }
-  // var foo = setInterval(function(){
-  //   var an = Math.floor(Math.random()*1023); // 0 ~ 255
-  //   arduino.analogWrite(9, an, null);
-  //   i++;
-  // }, 100);
-  // setTimeout(function() {
-  //   clearInterval(foo);
-  // }, 100);
-
   if (isUserWin) {
     for (var i = 0; i < 90; i++) {
      arduino.digitalWrite(9, false);
